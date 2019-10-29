@@ -1,0 +1,31 @@
+<br>
+<div class="card-deck w-75 mx-auto">
+  <div class="card shadow">
+    <div class="card-header text-center text-primary">
+      <h5 class="card-title mx-auto">
+        Results
+        <small>({{resultsPropArray && resultsPropArray.length}})</small>
+      </h5>
+    </div>
+    <br>
+    <div *ngFor="let prop of resultsPropArray">
+      <app-custom-property-card [propertyObj]="prop" [propCategory]="'add'">
+      </app-custom-property-card>
+      <br>
+    </div>
+  </div>
+  <div class="card shadow">
+    <div class="card-header text-center text-success">
+      <h5 class="card-title mx-auto">
+        Saved Properties
+        <small>({{savedPropArray && savedPropArray.length}})</small>
+      </h5>
+    </div>
+    <br>
+    <div *ngFor="let prop of savedPropArray">
+      <app-custom-property-card [propertyObj]="prop" [propCategory]="'remove'">
+      </app-custom-property-card>
+      <br>
+    </div>
+  </div>
+</div>
