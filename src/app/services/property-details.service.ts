@@ -70,10 +70,10 @@ export class PropertyDetailsService {
     console.log('Calling mock HTTP service to get data.');
     this.getPropertyDetailsFromBackend().subscribe(
       (data: any) => {
-        this.setResultsObservable(data.results);
-        this.setSavedObservable(data.saved);
         this.resultsArray = data.results;
         this.savedArray = data.saved;
+        this.setResultsObservable([...this.resultsArray]);
+        this.setSavedObservable([...this.savedArray]);
       },
       error => {
         console.log(error);
@@ -117,7 +117,7 @@ export class PropertyDetailsService {
           console.log(message);
         } else {
           this.savedArray.push(obj);
-          this.setSavedObservable(this.savedArray);
+          this.setSavedObservable([...this.savedArray]);
           console.log(`Added property id: ${id} to saved properties.`);
         }
       } else {
@@ -134,11 +134,10 @@ export class PropertyDetailsService {
   */
   removeSavedProperty(id: string): string {
     let message = '';
-    if (id && this.savedArray && (this.getPropertyIndexById(id, this.savedArray) > -1)) {
-      this.savedArray = this.savedArray.filter(obj => {
-        return (obj.id !== id);
-      });
-      this.setSavedObservable(this.savedArray);
+    const index = this.getPropertyIndexById(id, this.savedArray);
+    if (id && this.savedArray && (index > -1)) {
+      this.savedArray.splice(index, 1);
+      this.setSavedObservable([...this.savedArray]);
       message = `Removed property id: ${id} from saved properties.`;
       console.log(message);
 
@@ -147,6 +146,26 @@ export class PropertyDetailsService {
       console.log(message);
     }
     return message;
+  }
+
+  /*
+  * Hides a property in results array, i.e., moves the property to end and greys out
+  * @param {string} id The id of the property to be removed from saved array
+  * @returns
+  */
+  hideResultsProperty(id: string) {
+    const index = this.getPropertyIndexById(id, this.resultsArray);
+    const tempArray = Array.from(this.resultsArray);
+    const item = tempArray.splice(index, 1)[0];
+    item.hide = true;
+    tempArray.push(item);
+    this.resultsArray = tempArray;
+    this.setResultsObservable([...this.resultsArray]);
+  }
+
+  unhideResultsProperty(id: string) {
+    const index = this.getPropertyIndexById(id, this.resultsArray);
+    this.resultsArray[index].hide = false;
   }
 
   /*

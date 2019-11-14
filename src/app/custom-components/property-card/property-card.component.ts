@@ -14,23 +14,27 @@ import { PropertyDetailsService } from '../../services/property-details.service'
   styles: ['.card-header { backbround-color: bgColor}']
 })
 export class PropertyCardComponent implements OnInit {
-
   message: string;
   @Input() propertyObj: Property;
   @Input() propCategory: string;
 
-  constructor(private propertyDetailsService: PropertyDetailsService) {
-  }
+  constructor(private propertyDetailsService: PropertyDetailsService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  addPropertyToSaved(id: string) {
-    this.message = this.propertyDetailsService.addSavedProperty(id);
+  updateProperty(obj: any) {
+    switch (obj.type) {
+      case 'add':
+        this.message = this.propertyDetailsService.addSavedProperty(obj.id);
+        break;
+      case 'remove':
+        this.propertyDetailsService.removeSavedProperty(obj.id);
+        break;
+      case 'hide':
+        this.propertyDetailsService.hideResultsProperty(obj.id);
+        break;
+      case 'unhide':
+        this.propertyDetailsService.unhideResultsProperty(obj.id);
+    }
   }
-
-  removePropoertyFromSaved(id: string) {
-    this.propertyDetailsService.removeSavedProperty(id);
-  }
-
 }

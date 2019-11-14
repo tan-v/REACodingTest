@@ -1,7 +1,18 @@
-<button *ngIf="propertyTypeFlag" type="button" class="btn btn-success" (click)="clickedAdd();">
-  Add Property
-</button>
+<div class="text-center button-container">
+  <button *ngIf="propertyTypeFlag && !hidden" type="button" class="btn btn-success mr-3" (click)="clicked('add');">
+    Add Property
+  </button>
 
-<button *ngIf="!propertyTypeFlag" type="button" class="btn btn-danger" (click)="clickedRemoved();">
-  Remove Property
-</button>
+  <button *ngIf="propertyTypeFlag && !hidden" type="button" class="btn btn-info" (click)="clicked('hide');">
+    Hide Property
+  </button>
+
+  <button *ngIf="hidden" type="button" class="btn btn-info" (click)="clicked('unhide');">
+    Unhide Property
+  </button>
+  
+
+  <button *ngIf="!propertyTypeFlag" type="button" class="btn btn-danger" (click)="clicked('remove');">
+    Remove Property
+  </button>
+</div>

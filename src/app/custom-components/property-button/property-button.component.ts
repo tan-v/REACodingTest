@@ -14,8 +14,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class PropertyButtonComponent implements OnInit {
   @Input() id = '';
   @Input() type = '';
-  @Output() addClicked = new EventEmitter();
-  @Output() removeClicked = new EventEmitter();
+  @Input() hidden = false;
+  @Output() clickedButton = new EventEmitter();
 
   propertyTypeFlag: boolean;
 
@@ -25,12 +25,8 @@ export class PropertyButtonComponent implements OnInit {
     this.setPropertyFlag();
   }
 
-  clickedAdd() {
-    this.addClicked.emit(this.id);
-  }
-
-  clickedRemoved() {
-    this.removeClicked.emit(this.id);
+  clicked(buttonType: string) {
+    this.clickedButton.emit({id: this.id, type: buttonType});
   }
 
   setPropertyFlag() {

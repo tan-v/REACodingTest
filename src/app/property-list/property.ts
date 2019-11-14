@@ -12,4 +12,5 @@ export class Property {
   'agency': Agency;
   'id': string;
   'mainImage': string;
+  'hide': boolean;
 }

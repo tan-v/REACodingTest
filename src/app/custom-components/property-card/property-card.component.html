@@ -1,4 +1,4 @@
-<div class="card mx-auto shadow property-card">
+<div class="card mx-auto shadow property-card" [class.hide]="propertyObj['hide']">
   <div class="card-header" [style.background-color]="propertyObj['agency']['brandingColors']['primary']">
     <span><img class="card-img-top" src="{{propertyObj['agency']['logo']}}" alt="Logo image"></span>
   </div>
@@ -6,8 +6,8 @@
     <img class="card-img-top img-responsive" src="{{propertyObj['mainImage']}}" alt="House image">
 
     <div class="overlay">
-      <app-custom-property-button [type]="propCategory" [id]="propertyObj['id']"
-        (addClicked)="addPropertyToSaved($event);" (removeClicked)="removePropoertyFromSaved($event);">
+      <app-custom-property-button [type]="propCategory" [id]="propertyObj['id']" [hidden]="propertyObj['hide']"
+        (clickedButton)="updateProperty($event);">
       </app-custom-property-button>
     </div>
     <hr>
